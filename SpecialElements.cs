@@ -14,6 +14,7 @@ namespace TestProject1
         IWebDriver driver;
         IWebElement textBox, checkBox, radioButton, dropDownMenu, elementFromTheDropDownMenu, image;
         IAlert alert;
+       
 
         [SetUp]
         public void Setup()
@@ -35,6 +36,11 @@ namespace TestProject1
 
             textBox = driver.FindElement(By.Name("username"));
             textBox.SendKeys("Test text");
+
+            //Screenshot
+            Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
+            screenshot.SaveAsFile("C://Users//RODRIGO//Desktop//screen1.png", ScreenshotImageFormat.Png);
+
             Thread.Sleep(3000);
 
             // textBox.Clear();
@@ -48,7 +54,6 @@ namespace TestProject1
             driver.Quit();
 
             Assert.Pass(result +  "length:" + maxLength);
-
            
         }
 
