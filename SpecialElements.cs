@@ -2,10 +2,15 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
+
+using NUnit.Framework.Interfaces;
+using NUnit;
+
+using AventStack.ExtentReports.Reporter;
+using AventStack.ExtentReports;
+
 
 namespace TestProject1
 {
@@ -14,8 +19,10 @@ namespace TestProject1
         IWebDriver driver;
         IWebElement textBox, checkBox, radioButton, dropDownMenu, elementFromTheDropDownMenu, image;
         IAlert alert;
-       
 
+        public static ExtentTest test;
+        public static ExtentReports extent;
+       
         [SetUp]
         public void Setup()
         {
@@ -27,33 +34,61 @@ namespace TestProject1
 
         }
 
+        //Report
+        [OneTimeSetUp]
+        public void ExtentStart()
+        {
+            extent = new ExtentReports();
+            var htmlReporter = new ExtentHtmlReporter(@"\reports\Report" + DateTime.Now.ToString("_MMddyyy_hhmmtt") + ".html");
+            extent.AttachReporter(htmlReporter);
+        }
+
         [Test, Order(1)]
         public void TextBox()
         {
+
+            //test = extent.CreateTest("T001").Info("TextBox Test");
+
             string url = "https://testing.todorvachev.com/text-input-field/";
 
             driver.Navigate().GoToUrl(url);
 
             textBox = driver.FindElement(By.Name("username"));
-            textBox.SendKeys("Test text");
 
-            //Screenshot
-            Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
-            screenshot.SaveAsFile("C://Users//RODRIGO//Desktop//screen1.png", ScreenshotImageFormat.Png);
+            try
+            {
+                textBox.SendKeys("Test text");
 
-            Thread.Sleep(3000);
+                //Screenshot
+                Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
+                screenshot.SaveAsFile("C://Users//RODRIGO//Desktop//screen1.png", ScreenshotImageFormat.Png);
 
-            // textBox.Clear();
-            //Getting value
-            string result = textBox.GetAttribute("value");
+                Thread.Sleep(3000);
 
-            string maxLength = textBox.GetAttribute("maxlength");
+                // textBox.Clear();
+                //Getting value
+                string result = textBox.GetAttribute("value");
 
-            Thread.Sleep(3000);
+                string maxLength = textBox.GetAttribute("maxlength");
 
-            driver.Quit();
+                Thread.Sleep(3000);      
 
-            Assert.Pass(result +  "length:" + maxLength);
+                //Test Result
+                //test.Log(Status.Pass, "Test Pass");
+
+                driver.Quit();
+
+                Assert.Pass(result + "length:" + maxLength);
+
+               
+
+            }
+            catch (Exception e)
+            {
+               // test.Log(Status.Fail, "Test Fail");
+                throw;
+            }
+
            
         }
 

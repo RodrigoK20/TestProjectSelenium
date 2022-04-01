@@ -25,7 +25,7 @@ namespace TestProject1
         }
 
         [Test, Order(3)]
-        public void verifyLink()
+        public void VerifyLink()
         {
             driver.Navigate().GoToUrl("http://testing.todorvachev.com");
 
@@ -39,7 +39,7 @@ namespace TestProject1
         }
 
         [Test, Order(2)]
-        public void verifyLink2()
+        public void VerifyLink2()
         {
             driver.Navigate().GoToUrl("http://testing.todorvachev.com");
 
@@ -51,7 +51,7 @@ namespace TestProject1
         }
 
         [Test, Order(1)]
-        public void verifyPricingPage()
+        public void VerifyPricingPage()
         {
             driver.Navigate().GoToUrl("http://browserstack.com/pricing");
 
