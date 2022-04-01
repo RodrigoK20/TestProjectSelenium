@@ -49,7 +49,6 @@ namespace TestProject1
         [Test, Order(1)]
         public void TextBoxTest()
         {
-       
             //Parameters test
             _test = _extent.CreateTest("TextBox Test").Info("TextBox Test");
             _test.AssignAuthor("Rodrigo Alejandro");
@@ -63,7 +62,7 @@ namespace TestProject1
 
             textBox = driver.FindElement(By.Name("username"));
 
-            try
+            if (textBox.Displayed == true)
             {
                 textBox.SendKeys("Test text");
                 string result = textBox.GetAttribute("value");
@@ -71,7 +70,6 @@ namespace TestProject1
 
 
                 //Assert.Pass method allows you to immediately end the test, recording it as successful
-                //Assert.Pass(result + "length:" + maxLength);
 
                 //Screenshot
                 string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
@@ -79,21 +77,21 @@ namespace TestProject1
                 Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
                 screenshot.SaveAsFile(path, ScreenshotImageFormat.Png);
 
-
                 _test.Pass("TextBox Test Passed").AddScreenCaptureFromPath(path);
-               
-                //_test.Log(Status.Pass, "details");
-                // Assert.Pass("Test Successfull");
+
                 finishTest();
+                Assert.Pass("Test Successfull");
 
             }
-            catch (Exception e)
+
+            else
             {
-               //  _test.Log(Status.Fail, "Test Fail");
+                Assert.Fail("Error");
+                //  _test.Log(Status.Fail, "Test Fail");
                 _test.Fail("TextBox Test Fail!");
-                throw;
+                //throw;
             }
-   
+
         }
 
         [Test, Order(2)]
@@ -103,19 +101,20 @@ namespace TestProject1
             _test = _extent.CreateTest("Test Number").Info("Number Test");
             _test.AssignAuthor("Rodrigo Alejandro");
 
-            int number1 = 3;
+            int number1 = 12;
             int number2 = 6;
 
 
             if(number1 + number2 == 12)
             {
+                Assert.Pass("Success");
                 _test.Pass("Test passed");
             }
 
             else
             {
                 _test.Fail("Error");
-              
+                Assert.Fail("Error");
             }
            
         }
