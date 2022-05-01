@@ -101,7 +101,7 @@ namespace TestProject1
             _test = _extent.CreateTest("Test Number").Info("Number Test");
             _test.AssignAuthor("Rodrigo Alejandro");
 
-            int number1 = 12;
+            int number1 = 6;
             int number2 = 6;
 
 
